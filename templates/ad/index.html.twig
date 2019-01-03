@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block title %}Nos annonces !{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,29 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'src/Controller/AdController.php'|file_link(0) }}">src/Controller/AdController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'templates/ad/index.html.twig'|file_link(0) }}">templates/ad/index.html.twig</a></code></li>
-    </ul>
+    <h1 class="my-3">Les annonces de nos hotes</h1>
+    <div class="row">
+        {% for ad in ads %}
+            {% set url =  path('ads.show', {'slug': ad.slug}) %}
+            <div class="col-md-4">
+                <div class="card bg-light mb-3">
+                    <div class="card-header text-center">
+                        {{ ad.rooms }} chambres, <strong>{{ ad.price }}&euro; / nuit</strong><br>
+                        <small>Pas encore noté</small>
+                    </div>
+                    <a href="{{ url }}">
+                    <img src="{{ ad.coverImage }}" alt="Image de l'appartement" style="height: 200px; width:100%; display: block;">
+                    </a>
+                        <div class="card-body">
+                            <a href="{{ url }}">
+                                <h4 class="card-title">{{ ad.title }}</h4>
+                            </a>
+                        <p class="card-text">{{ ad.introduction }}</p>
+                        <a href="{{ url }}" class="btn btn-secondary">Voir l'appartement</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
